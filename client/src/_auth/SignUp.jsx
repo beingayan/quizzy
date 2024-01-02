@@ -1,81 +1,77 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { z } from 'zod';
-
-const UserSchema = z.object({
-    email: z.string(),
-    password: z.string().email(),
-   
-  });
-
-
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import useFunction from "./useFunction";
+import FormHelperText from "@mui/material/FormHelperText";
+import { errorMsg } from "../lib/utils";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const formRef = React.useRef();
+
+//useState
+  const [signupValidation, validationMsg] = useFunction();
+
+
+//   function handles
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    const userData = {
-       
-        email: 'john@example.com',
-        password: 'John Doe',
-        
-      };
-
+  
     try {
-        const validatedUser = UserSchema.parse(userData);
+        const signupData = {
+            firstName: data.get("firstName"),
+            lastName: data.get("lastName"),
+            email: data.get("email"),
+            password: data.get("password"),
+          };
+      signupValidation(signupData);
     } catch (error) {
-        console.error('Validation error:', error.errors);
-      const fieldErrors = {};
 
-      // Extract field errors and set them in state
-    //   error.errors.map((err) => {
-    //     fieldErrors[err.path[0]] = err.message;
-    //     return null;
-    //   });
 
     }
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-   
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
+
       <Container component="main" maxWidth="xs">
+
         <CssBaseline />
         <Box
+
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
+
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
+         
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+            ref={formRef}
+          >
             <Grid container spacing={2}>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -86,7 +82,9 @@ export default function SignUp() {
                   label="First Name"
                   autoFocus
                 />
+                {errorMsg( validationMsg ? validationMsg["firstName"] : "")}
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -96,7 +94,9 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                 />
+                {errorMsg( validationMsg ? validationMsg["lastName"] : "")}
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -106,7 +106,9 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                 />
+                 {errorMsg( validationMsg ? validationMsg["email"] : "")}
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -117,9 +119,11 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
+                {errorMsg( validationMsg ? validationMsg["password"] : "")}
               </Grid>
-            
+
             </Grid>
+
             <Button
               type="submit"
               fullWidth
@@ -128,16 +132,19 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
+              
             </Grid>
+
           </Box>
         </Box>
-       
+        
       </Container>
     </ThemeProvider>
   );

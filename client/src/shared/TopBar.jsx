@@ -3,6 +3,7 @@ import React from "react";
 
 const TopBar = () => {
   return (
+
     <AppBar position="static">
       <Typography
         variant="h6"
@@ -11,6 +12,7 @@ const TopBar = () => {
         height={50}
       >
         Quizzy Mania
+        
       </Typography>
     </AppBar>
   );
