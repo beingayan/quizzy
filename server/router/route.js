@@ -14,6 +14,9 @@ router.route('/questions')
 router.route('/result')
         .get(controller.getResult)
         .post(controller.storeResult)
-        .delete(controller.dropResult)
+        .delete(controller.dropResult);
+
+router.route('/signup')
+       .post(controller.signup)
 
 export default router;

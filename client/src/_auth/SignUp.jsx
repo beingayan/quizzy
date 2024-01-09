@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useFunction from "./useFunction";
 import FormHelperText from "@mui/material/FormHelperText";
 import { errorMsg } from "../lib/utils";
+import { useCreateUserAccount } from "../lib/react-query/queryMutations";
 
 const defaultTheme = createTheme();
 
@@ -20,6 +21,7 @@ export default function SignUp() {
 
 //useState
   const [signupValidation, validationMsg] = useFunction();
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount(); 
 
 
 //   function handles
@@ -35,7 +37,11 @@ export default function SignUp() {
             email: data.get("email"),
             password: data.get("password"),
           };
+          console.log("sign",signupData)
       signupValidation(signupData);
+      createUserAccount(signupData)
+
+      
     } catch (error) {
 
 
