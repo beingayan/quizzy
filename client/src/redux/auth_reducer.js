@@ -10,6 +10,8 @@ export const authReducer = createSlice({
   },
   reducers: {
     setUserAuth: (state, action) => {
+      console.log("state-->", state);
+      console.log("action-->", action)
       let { userDetail, token, isLoggedIn, isClientAdmin } = action.payload;
       return {
         ...state,

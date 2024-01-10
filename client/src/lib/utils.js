@@ -1,5 +1,6 @@
 import FormHelperText from "@mui/material/FormHelperText";
 import axios from 'axios'
+import Loader from "../shared/Loader";
 export const errorMsg = (msg) => (
 <FormHelperText sx={{ color: "red" }}>
     {msg}
@@ -18,4 +19,15 @@ export const setUserDetailInLocalStorage = (data,token)=>{
     const con_data_into_json = JSON.stringify(data);
     window.localStorage.setItem('userDetail',con_data_into_json);
     window.localStorage.setItem('token', token);
+}
+
+
+
+export const showLoader = ()=> {
+    
+<Loader/>
+}
+
+export const hideLoader = () =>{
+    return (<></>)
 }

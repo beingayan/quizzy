@@ -5,13 +5,15 @@ import thunk from 'redux-thunk';
 import questionReducer from './question_reducer';
 import resultReducer from './result_reducer';
 import auth_reducer from './auth_reducer';
+import loading_reducer from './loading_reducer';
 
 
 
 const rootReducer = combineReducers({
     questions : questionReducer,
     result : resultReducer,
-    auth:auth_reducer
+    auth:auth_reducer,
+    loading:loading_reducer
 })
 
 /** create store with reducer */

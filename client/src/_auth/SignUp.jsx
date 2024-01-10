@@ -21,7 +21,7 @@ export default function SignUp() {
 
 //useState
   const [signupValidation, validationMsg] = useFunction();
-  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount(); 
+  const { mutateAsync: createUserAccount,isSuccess} = useCreateUserAccount(); 
 
 
 //   function handles
@@ -29,6 +29,7 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+  
   
     try {
         const signupData = {
@@ -39,13 +40,18 @@ export default function SignUp() {
           };
           console.log("sign",signupData)
       signupValidation(signupData);
-      createUserAccount(signupData)
+      
+      createUserAccount(signupData).
+      then((data)=>console.log("data-->",data))
+     
+    
 
       
     } catch (error) {
 
 
     }
+    console.log("isSuccess-->",isSuccess) 
   };
 
   return (
