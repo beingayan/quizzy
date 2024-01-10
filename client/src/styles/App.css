@@ -170,3 +170,11 @@ input[type=radio]:checked ~ .text-primary{
 .checked::before{
   background: var(--primary-color)
 }
+
+.default-axio-style{
+  background: darkblue;
+  color: #fff;
+  font-size: 20px;
+  width: 34vw;
+  padding: 30px 20px;
+}

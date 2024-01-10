@@ -13,11 +13,14 @@ import useFunction from "./useFunction";
 import FormHelperText from "@mui/material/FormHelperText";
 import { errorMsg } from "../lib/utils";
 import { useCreateUserAccount } from "../lib/react-query/queryMutations";
+import { useDispatch } from "react-redux";
+import * as Action from '../redux/auth_reducer'
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
   const formRef = React.useRef();
+  const dispatch = useDispatch()
 
 //useState
   const [signupValidation, validationMsg] = useFunction();
@@ -29,29 +32,31 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-  
-  
+
     try {
         const signupData = {
-            firstName: data.get("firstName"),
-            lastName: data.get("lastName"),
-            email: data.get("email"),
-            password: data.get("password"),
-          };
-          console.log("sign",signupData)
+                   firstName: data.get("firstName"),
+                   lastName: data.get("lastName"),
+                   email: data.get("email"),
+                   password: data.get("password"),
+                       };
+          
       signupValidation(signupData);
-      
-      createUserAccount(signupData).
-      then((data)=>console.log("data-->",data))
-     
-    
 
+      createUserAccount(signupData)
+      .then((data)=>
+      {
+        let payload = {userDetail:data ,token:data.token,isLoggedIn:true,isClientAdmin:false}
+        // let { userDetail, token, isLoggedIn, isClientAdmin } = action.payload;
+        dispatch(Action.setUserAuth(payload))
+      }
+        )
+      .catch((err)=>console.log("error-->",err))
       
     } catch (error) {
 
-
     }
-    console.log("isSuccess-->",isSuccess) 
+    
   };
 
   return (

@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 // import {LoadingContext} from '../shared/axiosInstance'
 
 const AuthLayout = ({ children }) => {
-  const isAuthenticated = false;
-
-  const isLoading = useSelector((state) => state.loading.isLoading);
+  
+  const {loading:{isLoading},auth:{isLoggedIn}} = useSelector((state) => state);
+  const isAuthenticated = isLoggedIn;
+  console.log("isAuthenticated-->",isAuthenticated)
 
   return (
     <>

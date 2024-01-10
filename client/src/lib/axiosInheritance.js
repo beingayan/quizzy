@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import * as Action from '../redux/loading_reducer'
+import BasicAlerts from '../shared/ErrorAlert';
+import { toast } from 'react-toastify';
 // import { showLoader, hideLoader } from './loaderFunctions'; // Functions to show/hide loader
 
 const instance = axios.create({
@@ -63,6 +65,7 @@ const AxiosInterceptor = ({ children }) => {
               return config;
             },
             function (error) {
+             
               // Do something with request error
               return Promise.reject(error);
             }
@@ -79,6 +82,18 @@ const AxiosInterceptor = ({ children }) => {
               return response;
             },
             function (error) {
+             
+              toast(error.response.data.msg, {
+                style: {
+                  fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                  backgroundColor: "rgb(253, 237, 237)",
+                  color: "rgb(95, 33, 32)",
+                  borderRadius: "8px",
+                  // Add other styles as needed
+                },
+                hideProgressBar:true
+              });
+              
               // Hide loader on error response as well
               // hideLoader(); // Implement this function to hide the loader
               loadingState = false;

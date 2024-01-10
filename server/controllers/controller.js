@@ -3,7 +3,10 @@ import Results from "../models/resultSchema.js";
 import questions, { answers } from "../database/data.js";
 import JWTHandler from "../models/authSchema.js";
 import { v4 as uuidv4 } from "uuid";
+import signupSchema from "../models/signupSchema.js";
+import { config } from 'dotenv';
 
+config();
 /** get all questions */
 export async function getQuestions(req, res) {
   try {
@@ -80,16 +83,39 @@ export async function dropResult(req, res) {
 }
 
 export async function signup(req, res) {
+  const rowData = {
+    data: [],
+    isSuccess: false,
+    msg: "",
+  };
   try {
-    //     const jwtHandler = new JWTHandler("quizzy_auth_token_key");
-    const { email, firstName } = req.body;
-    const payload = { userId: uuidv4(), username: email, firstName };
+    const jwtHandler = new JWTHandler(process.env.JWT_KEY);
+    
+    const { email, firstName, password } = req.body.data;
 
-    //     const token = jwtHandler.generateToken(payload);
-    console.log("token-->", req.headers);
-    //     await res.json({ token: token, payload });
-    await res.json({ token: "test", payload });
+    if (!email || !firstName || !password) throw new Error("Data not provided");
+
+    const isDuplicateFlag = await signupSchema.find({ email });
+
+    if (isDuplicateFlag.length > 0) throw new Error("User Already Exist !");
+    const token = jwtHandler.generateToken({ email, firstName });
+
+    if (!token) throw new Error("Signup failed");
+
+    signupSchema.create(
+      { email, firstName, password },
+      async function (err, data) {
+        rowData["data"] = { firstName: data, token };
+        rowData["isSuccess"] = true;
+        rowData["msg"] = "Signup successfull.";
+        await res.status(201).json(rowData);
+      }
+    );
   } catch (error) {
     console.log("error-->", error);
+    rowData["data"] = [];
+    rowData["isSuccess"] = false;
+    rowData["msg"] = error.message;
+    await res.status(501).json(rowData);
   }
 }
