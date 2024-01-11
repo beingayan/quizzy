@@ -89,7 +89,7 @@ export async function signup(req, res) {
     msg: "",
   };
   try {
-    const jwtHandler = new JWTHandler(process.env.JWT_KEY);
+    const jwtHandler = new JWTHandler(process.env.JWT_KEY || "quiz1212key123$$");
     
     const { email, firstName, password } = req.body.data;
 

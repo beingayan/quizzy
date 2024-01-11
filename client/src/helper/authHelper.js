@@ -8,6 +8,7 @@ export const setUserDetailInLocalStorage = (data, token) => {
     const con_data_into_json = JSON.stringify(data);
     window.localStorage.setItem('userDetail', con_data_into_json);
     window.localStorage.setItem('token', token);
+    window.localStorage.setItem('isLoggedIn',true)
 }
 
 

@@ -1,19 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 :root{
-  --primary-color: #0DFF92;
+  /* --primary-color: #0DFF92; */
+  --primary-color: #1976d2;
   --dark-color:#222222;
-  --light-color: #f0f0f0;
+  --light-color: #90caf9;
 }
 
 body, html{
-  /* height: 100%;
-  background: var(--dark-color) */
+  height: 100%;
+  background: var(--dark-color)
 }
 
 * > *{
     font-family: 'Poppins', sans-serif;
 }
+
+.profile{
+  margin: 10px;
+  padding: 10px;
+  width: 0px;
+  transition: 0.2s ;
+  background: transparent;
+
+  /* width: 165px;
+  background: var(--primary-color);
+  opacity: 0.6;
+  border: 1px solid transparent;
+  border-radius: 2%;
+  margin: 10px;
+  padding: 10px; */
+}
+
+.profile:hover{
+  width: 165px;
+  background: var(--primary-color);
+  opacity: 0.6;
+  border: 1px solid transparent;
+  border-radius: 2%;
+  margin: 10px;
+  padding: 10px;
+}
+
 
 .container{
   display: block;
@@ -21,7 +49,7 @@ body, html{
   margin: 40px auto;
   height: auto;
   width: 800px;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .container .title{
@@ -30,6 +58,7 @@ body, html{
     border: 5px solid var(--primary-color);
     padding: .3em .2em;
     border-radius: 4px;
+    margin: -109px;
 }
 
 .text-light {
@@ -44,7 +73,9 @@ body, html{
 }
 
 .container .questions{
-    padding: 3em;
+    /* padding: 6em; */
+    margin: 123px 10px 15px 10px
+    /* padding: 1em; */
 }
 
 /* 
@@ -55,8 +86,15 @@ body, html{
   border-radius: 50px;
 } */
 
+.flex{
+  display: flex;
+}
+.space-between{
+  justify-content: space-between;
+}
+
 .container .grid{
-    margin-top: 3em;
+    /* margin-top: 3em; */
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -86,7 +124,7 @@ body, html{
 }
 
 ul li{
-  color: #AAAAAA;
+  color: #616161;
   display: block;
   position: relative;
   float: left;
@@ -114,7 +152,7 @@ ul li label{
 }
 
 ul li:hover label{
-	color: #FFFFFF;
+	color: #bdbdbd;
 }
 
 ul li .check{

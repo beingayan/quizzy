@@ -8,13 +8,13 @@ import { useSelector } from "react-redux";
 const AuthLayout = ({ children }) => {
   
   const {loading:{isLoading},auth:{isLoggedIn}} = useSelector((state) => state);
-  const isAuthenticated = isLoggedIn;
-  console.log("isAuthenticated-->",isAuthenticated)
+  const isAuthenticated = window.localStorage.getItem('isLoggedIn')|| false;
+ 
 
   return (
     <>
       {isAuthenticated ? (
-        <Navigate to="/home" />
+        <Navigate to="/quiz" />
       ) : (
         <>
           <TopBar />
